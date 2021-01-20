@@ -4,6 +4,19 @@
 
 <mapper namespace="cn.tycoding.mapper.SeckillMapper">
 
+    <resultMap id="baseMap" type="cn.tycoding.entity.Seckill">
+        <result property="seckillId" column="id" jdbcType="BIGINT"/>
+        <result property="title" column="title" jdbcType="VARCHAR"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="price" column="price" jdbcType="TIMESTAMP"/>
+        <result property="costPrice" column="costPrice" jdbcType="DECIMAL"/>
+        <result property="createTime" column="create_time" jdbcType="DECIMAL"/>
+        <result property="startTime" column="start_time" jdbcType="TIMESTAMP"/>
+        <result property="endTime" column="end_time" jdbcType="TIMESTAMP"/>
+        <result property="stockCount" column="stock_count" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+
     <select id="findAll" resultType="Seckill">
         SELECT * FROM seckill
     </select>

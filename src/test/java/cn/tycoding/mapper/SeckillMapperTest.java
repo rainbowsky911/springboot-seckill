@@ -32,6 +32,8 @@ public class SeckillMapperTest {
 
     @Test
     public void findById() {
+        System.out.println(seckillMapper.findById(1L));
+
         Seckill seckill = seckillMapper.findById(1l);
         System.out.println(seckill.getTitle());
     }

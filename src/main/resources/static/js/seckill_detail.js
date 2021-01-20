@@ -5,10 +5,10 @@ var seckill = {
         now: function () {
             return '/seckill/time/now';
         },
-        exposer: function(seckillId){
+        exposer: function (seckillId) {
             return '/seckill/' + seckillId + '/exposer';
         },
-        execution : function(seckillId, md5){
+        execution: function (seckillId, md5) {
             return '/seckill/' + seckillId + '/' + md5 + '/execution';
         }
     },
@@ -21,26 +21,26 @@ var seckill = {
         }
     },
     //处理秒杀逻辑
-    handleSeckill: function(seckillId, node, money){
+    handleSeckill: function (seckillId, node, money) {
         //获取秒杀地址，控制显示逻辑，执行秒杀
         node.hide().html('<button class="btn btn-primary btn-lg" id="killBtn">开始秒杀</button>');
-        $.post(seckill.URL.exposer(seckillId), {}, function(result){
+        $.post(seckill.URL.exposer(seckillId), {}, function (result) {
             //在回调函数中执行交互流程
-            if (result && result['success']){
+            if (result && result['success']) {
                 var exposer = result['data'];
-                if (exposer['exposed']){
+                if (exposer['exposed']) {
                     //开启秒杀
                     var md5 = exposer['md5'];
                     var killUrl = seckill.URL.execution(seckillId, md5);
                     console.log('killUrl:' + killUrl);
                     //one: 绑定一次点击事件
-                    $('#killBtn').one('click', function(){
+                    $('#killBtn').one('click', function () {
                         //执行秒杀的操作
                         //1. 先禁用按钮
                         $(this).addClass('disabled');
                         //2. 发送秒杀请求，执行秒杀
-                        $.post(killUrl, {money: money}, function(result){
-                            if (result && result['success']){
+                        $.post(killUrl, {money: money}, function (result) {
+                            if (result && result['success']) {
                                 var killResult = result['data'];
                                 var stateInfo = killResult['stateInfo'];
                                 //3. 显示秒杀结果
@@ -49,14 +49,14 @@ var seckill = {
                         })
                     });
                     node.show();
-                } else{
+                } else {
                     //未开启秒杀，避免用户得到的时间有偏差
                     var now = exposer['now'];
                     var start = exposer['start'];
                     var end = exposer['end'];
                     seckill.countdown(seckillId, now, start, end);
                 }
-            } else{
+            } else {
                 console.log('result:' + result);
             }
         });
@@ -66,29 +66,29 @@ var seckill = {
         var seckillBox = $('#seckill-box');
         var seckillTimeSpan = $('#seckill-time-span');
         //时间判断
-        if (nowTime > endTime){
+        if (nowTime > endTime) {
             //秒杀结束
             seckillTimeSpan.html('秒杀结束');
             seckillBox.hide();
-        }else if(nowTime < startTime){
+        } else if (nowTime < startTime) {
             //说明秒杀未开始，计时事件绑定
             var killTime = new Date(startTime + 1000);
-            seckillTimeSpan.countdown(killTime, function(event){
+            seckillTimeSpan.countdown(killTime, function (event) {
                 //时间格式
                 var format = event.strftime('秒杀开始倒计时： %D天 %H时 %M分 %S秒');
                 seckillTimeSpan.html(format);
                 //时间完成后回调事件
-            }).on('finish.countdown', function(){
+            }).on('finish.countdown', function () {
                 //获取秒杀地址，控制实现逻辑，执行秒杀
                 seckill.handleSeckill(seckillId, seckillBox, money);
             });
-        }else{
+        } else {
             //秒杀开始
             seckill.handleSeckill(seckillId, seckillBox, money);
 
             //计时
             var killEndTime = new Date(endTime + 1000);
-            seckillTimeSpan.countdown(killEndTime, function(event){
+            seckillTimeSpan.countdown(killEndTime, function (event) {
                 //时间格式
                 var format = event.strftime('距离秒杀结束： %D天 %H时 %M分 %S秒');
                 seckillTimeSpan.html(format);

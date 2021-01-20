@@ -1,6 +1,7 @@
 package cn.tycoding.mapper;
 
 import cn.tycoding.entity.SeckillOrder;
+import cn.tycoding.vo.SeckillOrderVO;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -31,4 +32,14 @@ public interface SeckillOrderMapper {
      * @return
      */
     SeckillOrder findById(@Param("seckillId") long seckillId, @Param("userPhone") long userPhone);
+
+    /**
+     * 根据秒杀商品ID查询订单明细数据并得到对应秒杀商品的数据，因为我们再SeckillOrder中已经定义了一个Seckill的属性
+     *
+     * @param seckillId
+     * @param userPhone
+     * @return
+     */
+    SeckillOrderVO findVOById(@Param("seckillId") long seckillId, @Param("userPhone") long userPhone);
+
 }

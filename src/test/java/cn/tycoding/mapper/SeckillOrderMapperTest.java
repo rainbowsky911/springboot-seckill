@@ -1,6 +1,8 @@
 package cn.tycoding.mapper;
 
 import cn.tycoding.entity.SeckillOrder;
+import cn.tycoding.vo.SeckillOrderVO;
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,17 @@ public class SeckillOrderMapperTest {
 
     @Test
     public void findById() {
-        SeckillOrder seckillOrder = seckillOrderMapper.findById(1l, 1278177);
-        System.out.println(seckillOrder.getSeckillId() + ": " + seckillOrder.getSeckill().getTitle());
+        SeckillOrder seckillOrder = seckillOrderMapper.findById(1l, 13721071025L);
+        Assert.assertNotNull(seckillOrder);
     }
+
+    /**
+     * 根据秒杀ID测试返回VO对象
+     */
+    @Test
+    public  void test_findOrderVOById(){
+        SeckillOrderVO seckillOrder = seckillOrderMapper.findVOById(1L, 13721071025L);
+        Assert.assertNotNull(seckillOrder);
+    }
+
 }
