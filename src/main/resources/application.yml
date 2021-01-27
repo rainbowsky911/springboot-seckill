@@ -53,7 +53,7 @@ spring:
     #redis服务器地址，这里用本地的redis
     host: 127.0.0.1
     # Redis服务器连接密码（默认为空）
-    password:
+    password: 123456
     #redis服务器连接端口，默认是6379
     port: 6379
     # 连接超时时间（毫秒）

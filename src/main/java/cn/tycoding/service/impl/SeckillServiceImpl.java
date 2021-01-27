@@ -140,6 +140,7 @@ public class SeckillServiceImpl implements SeckillService {
                     throw new SeckillCloseException("seckill is closed");
                 } else {
                     //秒杀成功
+                    //TODO 此处先异常
                     SeckillOrder seckillOrder = seckillOrderMapper.findById(seckillId, userPhone);
 
                     //更新缓存（更新库存数量）
